@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Linux Commands</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" rel="stylesheet"> <!-- For Icons -->
+    <style>
+        body {
+            background-color: #282828;
+            color: white;
+            font-family: 'Arial', sans-serif; /* Same font as landing page */
+            padding-top: 60px; /* Offset for fixed navbar */
+        }
+
+        .container {
+            padding-top: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: #333333;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 20px;
+            padding: 15px;
+            color: white;
+        }
+
+        .card-title {
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        .card-text {
+            color: #aaaaaa;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #aaaaaa;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffcc00 !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #66ff66 !important;
+        }
+
+        /* Card Container */
+        .card-deck {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Fixed Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Terminal Emulator</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#section1">Linux Terminal</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#section2">File System</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#section3">Advanced Commands</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <!-- Main Header -->
+    <div class="header">
+        <h1>Advanced Linux Commands</h1>
+        <p class="lead">Learn about the most commonly used Linux commands for advanced system operations.</p>
+    </div>
+
+    <!-- Card Deck for Commands -->
+    <div class="card-deck">
+        <div class="card">
+            <h5 class="card-title">1. `ls` - List Directory Contents</h5>
+            <p class="card-text">The `ls` command is used to list the files and directories in the current working directory. You can also pass options like `-l` to get detailed information, or `-a` to show hidden files.</p>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">2. `cd` - Change Directory</h5>
+            <p class="card-text">The `cd` command allows you to change the current working directory. For example, `cd /home/user` changes the directory to `/home/user`.</p>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">3. `cp` - Copy Files or Directories</h5>
+            <p class="card-text">The `cp` command is used to copy files or directories from one location to another. For example, `cp file1.txt file2.txt` copies `file1.txt` to `file2.txt`.</p>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">4. `mv` - Move or Rename Files/Directories</h5>
+            <p class="card-text">The `mv` command moves or renames files and directories. For example, `mv oldname.txt newname.txt` renames a file.</p>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">5. `rm` - Remove Files or Directories</h5>
+            <p class="card-text">The `rm` command is used to delete files and directories. To remove directories, use `rm -r` for recursive deletion.</p>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">6. `chmod` - Change File Permissions</h5>
+            <p class="card-text">The `chmod` command changes the permissions of a file or directory. It allows you to control who can read, write, or execute the file.</p>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">7. `chown` - Change File Ownership</h5>
+            <p class="card-text">The `chown` command changes the ownership of a file or directory. For example, `chown user:group file.txt` changes the ownership of `file.txt` to `user` and the group to `group`.</p>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">8. `ps` - View Running Processes</h5>
+            <p class="card-text">The `ps` command displays information about running processes on the system. You can use options like `-aux` to view all processes.</p>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">9. `top` - Task Manager</h5>
+            <p class="card-text">The `top` command shows a real-time, dynamic view of the system's resource usage, including CPU, memory, and running processes.</p>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">10. `grep` - Search for Patterns in Files</h5>
+            <p class="card-text">The `grep` command searches for a specific pattern or string in files. For example, `grep "searchterm" file.txt` searches for `searchterm` in `file.txt`.</p>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">11. `df` - Disk Space Usage</h5>
+            <p class="card-text">The `df` command shows the amount of disk space used and available on your file system. Use the `-h` option to display human-readable sizes.</p>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">12. `du` - Disk Usage of Files</h5>
+            <p class="card-text">The `du` command displays the disk usage of files and directories. Use `du -sh` for a summary of a directory's size.</p>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">13. `sudo` - Execute Commands as Superuser</h5>
+            <p class="card-text">The `sudo` command allows you to execute a command with superuser privileges. This is essential for administrative tasks like installing software.</p>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">14. `wget` - Download Files from the Internet</h5>
+            <p class="card-text">The `wget` command is used to download files from the web. For example, `wget http://example.com/file.txt` will download `file.txt` from the specified URL.</p>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">15. `tar` - Archive Files</h5>
+            <p class="card-text">The `tar` command is used to create or extract compressed archives. For example, `tar -czvf archive.tar.gz /directory` creates a compressed archive of a directory.</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>&copy; 2024 Linux Terminal Emulator | Developed by Tholumuzi</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
