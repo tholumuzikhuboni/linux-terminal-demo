@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Terminal Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #282828;
+            color: white;
+            font-family: Consolas, monospace;
+        }
+
+        .container {
+            padding-top: 50px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .terminal {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            height: 500px;
+            overflow-y: auto;
+        }
+
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .input-line span {
+            margin-right: 10px;
+            color: #66ff66; /* Terminal green */
+        }
+
+        .output-line {
+            white-space: pre-wrap;
+        }
+
+        .command {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            color: #66ff66;
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        .command:focus {
+            outline: none;
+        }
+
+        .command-line {
+            margin-bottom: 5px;
+        }
+
+        .error {
+            color: #ff6666;
+        }
+
+        .terminal-header {
+            font-size: 1.5rem;
+            color: #ffcc00;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .terminal-footer {
+            font-size: 0.9rem;
+            color: #aaaaaa;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .terminal-info {
+            color: #cccccc;
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Linux Terminal Emulator</h1>
+        <p class="lead">Simulate commands and explore the terminal environment.</p>
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Welcome to the Linux Terminal</div>
+        <div id="output"></div>
+        <div class="input-line">
+            <span>$</span>
+            <input type="text" id="command-input" class="command" autofocus placeholder="Enter command">
+        </div>
+        <div class="terminal-info">
+            <p>Type <strong>help</strong> for available commands.</p>
+        </div>
+    </div>
+
+    <div class="terminal-footer">
+        <p>&copy; 2024 Linux Terminal Demo | Developed by Tholumuzi</p>
+    </div>
+</div>
+
+<script>
+    const outputDiv = document.getElementById('output');
+    const commandInput = document.getElementById('command-input');
+
+    // Predefined files and directories
+    const files = {
+        "README.txt": "This is a demo README file.",
+        "index.html": "<html><body><h1>Hello World</h1></body></html>"
+    };
+
+    let currentDir = "/home/user";
+    const directories = {
+        "/home/user": ["Documents", "Downloads", "Pictures", "Music", "Videos"]
+    };
+
+    // Function to process the command input
+    function processCommand(command) {
+        command = command.trim();
+        let response = '';
+
+        const cmdParts = command.split(" ");
+        const mainCommand = cmdParts[0];
+        const arg = cmdParts.slice(1).join(" ");
+
+        if (commands[mainCommand]) {
+            response = commands[mainCommand](arg);
+        } else if (command === '') {
+            response = '';
+        } else {
+            response = `command not found: ${command}`;
+        }
+
+        // Display the command and its response
+        displayOutput(`$ ${command}`, response);
+    }
+
+    // Command handling logic
+    const commands = {
+        "help": () => "Available commands: help, ls, pwd, echo, date, cd <dir>, mkdir <dir>, cat <file>, clear, touch <file>, rm <file>, rmdir <dir>, ls -l, cp <src> <dest>, mv <src> <dest>, man <command>",
+        "ls": () => {
+            if (directories[currentDir]) {
+                return directories[currentDir].join(" ");
+            } else {
+                return "No directories found.";
+            }
+        },
+        "pwd": () => currentDir,
+        "echo": (arg) => arg,
+        "date": () => new Date().toLocaleString(),
+        "cd": (dir) => {
+            const path = `${currentDir}/${dir}`;
+            if (directories[path]) {
+                currentDir = path;
+                return `Changed directory to ${path}`;
+            } else {
+                return `No such directory: ${dir}`;
+            }
+        },
+        "mkdir": (dir) => {
+            const path = `${currentDir}/${dir}`;
+            if (!directories[path]) {
+                directories[path] = [];
+                return `Directory created: ${path}`;
+            } else {
+                return `Directory already exists: ${dir}`;
+            }
+        },
+        "cat": (file) => {
+            if (files[file]) {
+                return files[file];
+            } else {
+                return `No such file: ${file}`;
+            }
+        },
+        "clear": () => {
+            outputDiv.innerHTML = '';
+            return '';
+        },
+        "touch": (file) => {
+            if (!files[file]) {
+                files[file] = "";
+                return `File created: ${file}`;
+            } else {
+                return `File already exists: ${file}`;
+            }
+        },
+        "rm": (file) => {
+            if (files[file]) {
+                delete files[file];
+                return `File removed: ${file}`;
+            } else {
+                return `No such file: ${file}`;
+            }
+        },
+        "rmdir": (dir) => {
+            const path = `${currentDir}/${dir}`;
+            if (directories[path] && directories[path].length === 0) {
+                delete directories[path];
+                return `Directory removed: ${dir}`;
+            } else {
+                return `Directory not empty or does not exist: ${dir}`;
+            }
+        },
+        "ls -l": () => {
+            let output = "";
+            if (directories[currentDir]) {
+                directories[currentDir].forEach(item => {
+                    const type = files[item] ? "file" : "dir";
+                    output += `${type} ${item}\n`;
+                });
+            } else {
+                output = "No directories found.";
+            }
+            return output;
+        },
+        "cp": (args) => {
+            const [src, dest] = args.split(" ");
+            if (files[src]) {
+                files[dest] = files[src];
+                return `File copied from ${src} to ${dest}`;
+            } else {
+                return `No such file: ${src}`;
+            }
+        },
+        "mv": (args) => {
+            const [src, dest] = args.split(" ");
+            if (files[src]) {
+                files[dest] = files[src];
+                delete files[src];
+                return `File moved from ${src} to ${dest}`;
+            } else {
+                return `No such file: ${src}`;
+            }
+        },
+        "man": (command) => {
+            const manual = {
+                "help": "Displays the list of available commands.",
+                "ls": "Lists the files and directories in the current directory.",
+                "pwd": "Prints the current working directory.",
+                "echo": "Prints the provided argument.",
+                "date": "Displays the current date and time.",
+                "cd": "Changes the current directory.",
+                "mkdir": "Creates a new directory.",
+                "cat": "Displays the contents of a file.",
+                "clear": "Clears the terminal.",
+                "touch": "Creates an empty file.",
+                "rm": "Removes a file.",
+                "rmdir": "Removes an empty directory.",
+                "cp": "Copies a file.",
+                "mv": "Moves a file."
+            };
+            return manual[command] || `No manual entry for ${command}`;
+        }
+    };
+
+    // Function to display command and response
+    function displayOutput(command, response) {
+        const commandLine = document.createElement('div');
+        commandLine.classList.add('command-line');
+        commandLine.innerHTML = `<span>$</span> ${command}`;
+
+        const responseLine = document.createElement('div');
+        responseLine.classList.add('output-line');
+        if (response.startsWith('command not found')) {
+            responseLine.classList.add('error');
+        }
+        responseLine.textContent = response;
+
+        outputDiv.appendChild(commandLine);
+        outputDiv.appendChild(responseLine);
+
+        // Scroll to the bottom of the terminal output
+        outputDiv.scrollTop = outputDiv.scrollHeight;
+    }
+
+    // Event listener for the command input
+    commandInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const command = commandInput.value;
+            processCommand(command);
+            commandInput.value = '';  // Clear the input field
+        }
+    });
+</script>
+
+</body>
+</html>
