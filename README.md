@@ -33,8 +33,8 @@ A simple and interactive Linux terminal emulator demo built with HTML, CSS, and 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/tholumuzikhuboni/linux-terminal-demo.git
-```
+   git clone https://github.com/tholumuzikhuboni/linux-terminal-demo.git```
+
 ## Usage
 
 1. **Open the Terminal Emulator**: After cloning the repository, open the `index.html` file in any modern browser to launch the terminal emulator.
